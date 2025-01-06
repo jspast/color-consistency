@@ -6,18 +6,21 @@ function [Mean, Std, Weight] = computeMeanStdPerChannelWithMask(Image, Mask)
     Mean = zeros(ImageSize(3));
     Std = zeros(ImageSize(3));
     
-    % Compute stats for each channel
-    for i = 1:ImageSize(3);
-        Channel = Image(:, :, i);
-        
-         % Apply the binary mask to extract pixels in the matched region
-        Match = Channel(Mask);
-        
-        % Compute the mean of pixels in the matched region
-        Mean(i) = mean(Match);
-        
-        % Compute the standard deviation of pixels in the matched region
-        Std(i) = std(double(Match));
+    % Compute stats for each channel, if the mask is valid
+    if (~isempty(Mask))
+        Mask = logical(Mask);
+        for i = 1:ImageSize(3);
+            Channel = Image(:, :, i);
+
+            % Apply the binary mask to extract pixels in the matched region
+            Match = Channel(Mask);
+
+            % Compute the mean of pixels in the matched region
+            Mean(i) = mean(Match);
+
+            % Compute the standard deviation of pixels in the matched region
+            Std(i) = std(double(Match));
+        end
     end
 
     Weight = max(size(Mask(Mask == 1)));

@@ -1,4 +1,4 @@
-function [ResultImages] = directPropagation(Images, ReferenceImages, Masks, Type)
+function [ResultImages] = directPropagationSURF(Images, ReferenceImages, Masks)
 % For every source image, transfer colors from the reference images
     % Images is an array of cells
     % ReferenceImages is an array with the numbers of the reference images
